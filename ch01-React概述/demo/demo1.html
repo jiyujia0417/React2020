@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        
+        #change {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn">1</button>
+    <button id="btn">2</button>
+    <button id="btn">3</button>
+    <button id="btn">4</button>
+
+    <ul id="list"></ul>
+
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+
+    <script>
+        let changePage = (data) => {}
+        let renderList = (data) => {
+            let content = '';
+            data.forEach((item, idx) => {
+                content +=
+                    `<li>
+                        <img src=${item.author.avatar_url}/ >
+                        <span>${item.reply_count}/${item.visit_count}</span>
+                        <a href="detail.html#${item.id}">${item.title}</a>
+                        </li>`;
+            })
+            $('#list').html(content);
+            console.timeEnd;
+        }
+
+        $.get('https://cnodejs.org/api/v1/topics', data => renderList(data.data));
+        $('button').click(
+            function() {
+                let page = $(this).html();
+                $.get('https://cnodejs.org/api/v1/topics?page=' + page,
+                    data => renderList(data.data)
+                );
+            }
+        )
+        var x = 1;
+        var x = 2;
+
+
+
+        // let renderList = (data) => {
+        //     let content = '';
+        //     data.forEach((item, index) => {
+        //         content += $('ul').append($(`
+        //         <li>
+        //         <img src=${item.author.avatar_url} />
+        //         <span>${item.reply_count}/${item.visit_count}</span>
+        //         <a href="detail.html#${item.id}">${item.title}</a>
+        //         </li>
+        //         `))
+        //     });
+        //     $('ul').html(content);
+        // };
+
+        // $('button').click(() => {
+        //     $.get(
+        //         'https://cnodejs.org/api/v1/topics',
+        //         data => {
+        //             renderList(data.data);
+        //         }
+        //     )
+        // });
+        // let xml = new XMLHttpRequest();
+        // xml.open("GET", "https://cnodejs.org/api/v1/topics", true);
+        // xml.send(null);
+        // xml.onreadystatechange = function() {};
+    </script>
+
+</body>
+
+</html>
